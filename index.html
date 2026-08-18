@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Screen Countdown Timer</title>
+<style>
+/* 直接調用你 Timer 資料夾內的 AvenirNext Demi 本地檔案 */
+@font-face {
+font-family: 'AvenirNextProDemi';
+src: url('AvenirNext-Demi.otf') format('opentype'),
+     url('AvenirNextLTPro-Demi.ttf') format('truetype'),
+     url('AvenirNextLTPro-Demi.woff') format('woff'),
+     url('AvenirNextLTPro-Demi.woff2') format('woff2'),
+font-weight: normal;
+font-style: normal;
+}
+
+/* 套用到你的計時器 */
+body, .timer-number, .separator {
+   font-family: 'AvenirNextProDemi', sans-serif !important;
+}
+
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+background-color: #000000;
+color: #ffffff;
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: center; /* 左右置中 */
+align-items: flex-start; /* 上下靠頂 */
+padding-top: 45vh;        /* 距離頂部 45% 螢幕高度 */
+overflow: hidden;
+font-family: 'Avenir Next Local', sans-serif;
+-webkit-font-smoothing: antialiased;
+}
+
+/* 容器限制為畫面寬度的 80%，確保 5 組數字絕對不爆框 */
+.timer-container {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+width:80vw;
+}
+
+/* 單個數字+英文標籤組 */
+.time-group {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
+}
+
+/* 數字大小改用 vw (畫面寬度的百份比） */
+.time-unit {
+font-size: 7vw;
+line-height: 0.9;
+font-variant-numeric: tabular-nums;
+letter-spacing: 0.02em;
+}
+
+/* 冒號大小 */
+.separator {
+font-size: 5vw;
+line-height: 0.9;
+margin: 0 0.5vw;
+position: relative;
+top: 0.05em;
+}
+
+/* 下方中文標籤 */
+.label {
+font-size: 1.5vw; 
+letter-spacing: normal;
+margin-top: 1vh; 
+color: #ffffff;
+text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="timer-container">
+<div class="time-group">
+<span id="months" class="time-unit">00</span>
+<span class="label">月</span>
+</div>
+
+<span class="separator">:</span>
+
+<div class="time-group">
+<span id="days" class="time-unit">00</span>
+<span class="label">日</span>
+</div>
+
+<span class="separator">:</span>
+
+<div class="time-group">
+<span id="hours" class="time-unit">00</span>
+<span class="label">時</span>
+</div>
+
+<span class="separator">:</span>
+
+<div class="time-group">
+<span id="minutes" class="time-unit">00</span>
+<span class="label">分</span>
+</div>
+
+<span class="separator">:</span>
+
+<div class="time-group">
+<span id="seconds" class="time-unit">00</span>
+<span class="label">秒</span>
+</div>
+</div>
+
+<script>
+// 設定目標時間：香港時間 2026年12月16日 00:00:00
+const targetDate = new Date(2026, 11, 16, 8, 0, 0);
+
+function updateTimer() {
+const now = new Date();
+
+if (now >= targetDate) {
+document.getElementById('months').textContent = "00";
+document.getElementById('days').textContent = "00";
+document.getElementById('hours').textContent = "00";
+document.getElementById('minutes').textContent = "00";
+document.getElementById('seconds').textContent = "00";
+return;
+}
+
+let m = (targetDate.getFullYear() - now.getFullYear()) * 12 + (targetDate.getMonth() - now.getMonth());
+
+let tempDate = new Date(now.getTime());
+tempDate.setMonth(tempDate.getMonth() + m);
+
+if (tempDate > targetDate) {
+m--;
+tempDate = new Date(now.getTime());
+tempDate.setMonth(tempDate.getMonth() + m);
+}
+
+let diff = targetDate - tempDate;
+
+const second = 1000;
+const minute = second * 60;
+const hour = minute * 60;
+const day = hour * 24;
+
+const d = Math.floor(diff / day);
+diff %= day;
+
+const h = Math.floor(diff / hour);
+diff %= hour;
+
+const min = Math.floor(diff / minute);
+diff %= minute;
+
+const s = Math.floor(diff / second);
+
+document.getElementById('months').textContent = String(m).padStart(2, '0');
+document.getElementById('days').textContent = String(d).padStart(2, '0');
+document.getElementById('hours').textContent = String(h).padStart(2, '0');
+document.getElementById('minutes').textContent = String(min).padStart(2, '0');
+document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+</script>
+</body>
+</html>
