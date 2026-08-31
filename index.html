@@ -36,18 +36,18 @@ height: 100vh;
 display: flex;
 justify-content: center; /* 左右置中 */
 align-items: flex-start; /* 上下靠頂 */
-padding-top: 45vh;        /* 距離頂部 40% 螢幕高度 */
+padding-top: 30vh;        /* 距離頂部 30% 螢幕高度 */
 overflow: hidden;
 font-family: 'Avenir Next Local', sans-serif;
 -webkit-font-smoothing: antialiased;
 }
 
-/* 容器限制為畫面寬度的 85%，確保 5 組數字絕對不爆框 */
+/* 容器限制為畫面寬度的 90%，確保 5 組數字絕對不爆框 */
 .timer-container {
 display: flex;
 align-items: flex-start;
 justify-content: space-between;
-width:85vw;
+width:90vw;
 }
 
 /* 單個數字+英文標籤組 */
@@ -60,10 +60,10 @@ justify-content: flex-start;
 
 /* 數字大小改用 vw (畫面寬度的百份比） */
 .time-unit {
-font-size: 8vw;
-line-height: 0.9;
+font-size: 10vw;
+line-height: 1;
 font-variant-numeric: tabular-nums;
-letter-spacing: 0.05em;
+letter-spacing: 0.08em;
 }
 
 /* 冒號大小 */
@@ -77,7 +77,7 @@ top: 0.05em;
 
 /* 下方中文標籤 */
 .label {
-font-size: 1.5vw; 
+font-size: 2.5vw; 
 letter-spacing: normal;
 margin-top: 1vh; 
 color: #ffffff;
